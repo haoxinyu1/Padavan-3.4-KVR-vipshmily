@@ -518,14 +518,25 @@ end
 			return
 		end
 		
+		log('开始同步节点信息...')
+
 		local add, del = 0, 0
 		for line in io.lines("/tmp/dlinkold.txt") do
-		newline = line
-		local olddb = io.popen("dbus get ssconf_basic_json_" ..line)
-		local old = olddb:read("*all")
-		--print(#old)
-		if #old > 1 then
-		old = cjson.decode(old)
+			local olddb = io.popen("dbus get ssconf_basic_json_" ..line)
+			local old_str = olddb:read("*all")
+			olddb:close()
+			
+			local old = nil
+			if old_str and #old_str > 1 then
+				local ok, decoded = pcall(cjson.decode, old_str)
+				if ok then
+					old = decoded
+				else
+					log('警告: 解析旧节点 JSON 失败: ' .. line)
+				end
+			end
+
+			if old then
 				if old.grouphashkey or old.hashkey then -- 没有 hash 的不参与删除
 					if not nodeResult[old.grouphashkey] or not nodeResult[old.grouphashkey][old.hashkey] then
 						os.execute("dbus remove ssconf_basic_json_" .. line)
@@ -541,29 +552,57 @@ end
 					end
 					log('忽略手动添加的节点: ' .. old.alias)
 				end
-	
 			end
 		end
+		
 		local ssrindext = io.popen('dbus list ssconf_basic_|grep _json_ | cut -d "=" -f1|cut -d "_" -f4|sort -rn|head -n1')
-		local ssrindex = ssrindext:read("*all")
-		if #ssrindex == 0 then
-			ssrindex = 1
-		else
-		ssrindex = tonumber(ssrindex) + 1
+		local ssrindex_str = ssrindext:read("*all")
+		ssrindext:close()
+		
+		local ssrindex = 1
+		if ssrindex_str and #ssrindex_str > 0 then
+			ssrindex = tonumber(ssrindex_str)
+			if not ssrindex then
+				log('警告: 无法解析当前最大索引: ' .. tostring(ssrindex_str) .. '，重置为 1')
+				ssrindex = 1
+			else
+				ssrindex = ssrindex + 1
+			end
 		end
 
+			ssrindex = ssrindex + 1
+			end
+		end
+
+		log('准备写入新增节点，起始索引: ' .. ssrindex)
+		local node_count = 0
+		local valid_nodes = 0
+		
 		for k, v in ipairs(nodeResult) do
+			node_count = node_count + 1
+			-- log('Processing group: ' .. k .. ', count: ' .. #v)
 			for kk, vv in ipairs(v) do
 				if not vv._ignore then
-					local json_data = cjson.encode(vv)
-					json_data = json_data:gsub("'", "'\\''")
-					os.execute("dbus set ssconf_basic_json_" .. ssrindex .. "='" .. json_data .. "'")
-					ssrindex = ssrindex + 1
-					add = add + 1
-
+					valid_nodes = valid_nodes + 1
+					local ok, json_data = pcall(cjson.encode, vv)
+					if ok then
+						-- Robust escaping for shell single quotes: ' -> '\''
+						local safe_json = json_data:gsub("'", "'\\''")
+						-- log('Writing node index: ' .. ssrindex .. ', alias: ' .. (vv.alias or "unknown"))
+						local ret = os.execute("dbus set ssconf_basic_json_" .. ssrindex .. "='" .. safe_json .. "'")
+						if ret == 0 then
+							ssrindex = ssrindex + 1
+							add = add + 1
+						else
+							log('Error: dbus set failed for index ' .. ssrindex)
+						end
+					else
+						log('Error: JSON encode failed for node: ' .. (vv.alias or "unknown"))
+					end
 				end
 			end
 		end
+		log('遍历节点群组数: ' .. node_count .. ', 有效节点数: ' .. valid_nodes)
 		log('新增节点数量: ' .. add, '删除节点数量: ' .. del)
 		log('订阅更新成功')
-		end
+	end
