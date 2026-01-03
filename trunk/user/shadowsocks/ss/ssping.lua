@@ -8,5 +8,5 @@ old = cjson.decode(old)
 old["ping"] = server_ping;
 old["lost"] = server_lost;
 print(cjson.encode(old))
-io.popen("dbus set ssconf_basic_json_" ..server_s.. "='" .. cjson.encode(old) .. "'")
-io.popen("logger -t 'SS' '节点(" .. old.alias .. ") 延迟:" .. server_ping .. "ms 丢包:" .. server_lost.. "'")
+os.execute("dbus set ssconf_basic_json_" ..server_s.. "='" .. cjson.encode(old) .. "'")
+os.execute("logger -t 'SS' '节点(" .. old.alias .. ") 延迟:" .. server_ping .. "ms 丢包:" .. server_lost.. "'")

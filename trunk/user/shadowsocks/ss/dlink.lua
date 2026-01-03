@@ -252,14 +252,14 @@ local function processData(szType, content)
 				result.quic_key = params.key
 				result.quic_security = params.security
 			end
-			if info.net == 'httpupgrade' then
-				result.httpupgrade_host = info.host
-				result.httpupgrade_path = info.path
-				end
-				if info.net == 'splithttp' then
-				result.splithttp_host = info.host
-				result.splithttp_path = info.path
-				end
+			if result.transport == 'httpupgrade' then
+				result.httpupgrade_host = params.host
+				result.httpupgrade_path = params.path
+			end
+			if result.transport == 'splithttp' then
+				result.splithttp_host = params.host
+				result.splithttp_path = params.path
+			end
 			if params.encryption then
 				result.security = params.encryption --vless security默认none
 			end
@@ -453,16 +453,18 @@ end
 						tinsert(servers, setmetatable(server, { __index = extra }))
 					end
 					nodes = servers
+				else
 				-- SS SIP008 直接使用 Json 格式
-					local info = cjson.decode(raw)
-				elseif info then
+				local ok, info = pcall(cjson.decode, raw)
+				if ok and info and (info.servers or (info[1] and info[1].server)) then
 					nodes = info.servers or info
-					if nodes[1].server and nodes[1].method then
+					if nodes[1] and nodes[1].server and nodes[1].method then
 						szType = 'sip008'
 					end
 				else
-					-- ssd 外的格式
+					-- ssd 外的格式（Base64 编码的链接）
 					nodes = split(base64Decode(raw):gsub(" ", "_"), "\n")
+				end
 				end
 				for _, v in ipairs(nodes) do
 					if v then
@@ -526,7 +528,7 @@ end
 		old = cjson.decode(old)
 				if old.grouphashkey or old.hashkey then -- 没有 hash 的不参与删除
 					if not nodeResult[old.grouphashkey] or not nodeResult[old.grouphashkey][old.hashkey] then
-						io.popen("dbus remove ssconf_basic_json_" ..i)
+						os.execute("dbus remove ssconf_basic_json_" .. line)
 						del = del + 1
 					else
 						local dat = nodeResult[old.grouphashkey][old.hashkey]
@@ -553,7 +555,7 @@ end
 		for k, v in ipairs(nodeResult) do
 			for kk, vv in ipairs(v) do
 				if not vv._ignore then				
-					io.popen("dbus set ssconf_basic_json_" .. ssrindex .. "='" .. cjson.encode(vv) .. "'")
+					os.execute("dbus set ssconf_basic_json_" .. ssrindex .. "='" .. cjson.encode(vv) .. "'")
 					ssrindex = ssrindex + 1
 					add = add + 1
 
