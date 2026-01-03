@@ -233,10 +233,14 @@
 			{"ttyd_port", "", NULL, EVM_RESTART_TTYD},
 #endif
 #if defined (APP_VLMCSD)
+#ifdef EVM_RESTART_VLMCSD
 			{"vlmcsd_enable", "", NULL, EVM_RESTART_VLMCSD},
 #endif
+#endif
 #if defined (APP_IPERF3)
+#ifdef EVM_RESTART_IPERF3
 			{"iperf3_enable", "", NULL, EVM_RESTART_IPERF3},
+#endif
 #endif
 #if defined (APP_NAPT66)
 			{"napt66_enable", "", NULL, FALSE},
@@ -1560,10 +1564,14 @@
 		{EVM_RESTART_TTYD,		EVT_RESTART_TTYD,		RCN_RESTART_TTYD,	0},
 #endif
 #if defined(APP_VLMCSD)
+#ifdef EVM_RESTART_VLMCSD
 		{EVM_RESTART_VLMCSD,	EVT_RESTART_VLMCSD,		RCN_RESTART_VLMCSD,	EVM_RESTART_DHCPD},
 #endif
+#endif
 #if defined(APP_IPERF3)
+#ifdef EVM_RESTART_IPERF3
 		{EVM_RESTART_IPERF3,	EVT_RESTART_IPERF3,		RCN_RESTART_IPERF3,	0},
+#endif
 #endif
 #if defined(APP_ADGUARDHOME)
 		{EVM_RESTART_ADGUARDHOME,		EVT_RESTART_ADGUARDHOME,		RCN_RESTART_ADGUARDHOME,	0},
