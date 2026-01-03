@@ -3,7 +3,7 @@
 
 <head>
 	<title>
-		<#Web_Title#> - AdGuard Home
+		<#Web_Title#> - 网易UU游戏加速器
 	</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Pragma" content="no-cache">
@@ -23,43 +23,45 @@
 	<script type="text/javascript" src="/itoggle.js"></script>
 	<script type="text/javascript" src="/popup.js"></script>
 	<script type="text/javascript" src="/help.js"></script>
-	<script type="text/javascript" src="/help_b.js"></script>
 	<script>
 		var $j = jQuery.noConflict();
 
 		$j(document).ready(function () {
 
-			init_itoggle('adg_enable');
+			init_itoggle('uu_enable');
 
 		});
 
 	</script>
 	<script>
-
+<% uuplugin_status(); %>
 <% login_state_hook(); %>
-
 			function initial() {
 				show_banner(2);
-				show_menu(5, 16);
-				showmenu();
+				show_menu(5, 22, 0);
 				show_footer();
+				fill_status(uuplugin_status());
+
 
 			}
 
+		function fill_status(status_code) {
+			var stext = "Unknown";
+			if (status_code == 0)
+				stext = "<#Stopped#>";
+			else if (status_code == 1)
+				stext = "<#Running#>";
+			$("uuplugin_status").innerHTML = '<span class="label label-' + (status_code != 0 ? 'success' : 'warning') + '">' + stext + '</span>';
+		}
+
 		function applyRule() {
-			//	if(validForm()){
 			showLoading();
 
 			document.form.action_mode.value = " Apply ";
-			document.form.current_page.value = "/Advanced_adguardhome.asp";
+			document.form.current_page.value = "/Advanced_uuplugin.asp";
 			document.form.next_page.value = "";
 
 			document.form.submit();
-			//	}
-		}
-
-		function showmenu() {
-			showhide_div('sdnslink', found_app_smartdns());
 		}
 
 		function done_validating(action) {
@@ -91,17 +93,13 @@
 
 		<form method="post" name="form" id="ruleForm" action="/start_apply.htm" target="hidden_frame">
 
-			<input type="hidden" name="current_page" value="Advanced_adguardhome.asp">
+			<input type="hidden" name="current_page" value="Advanced_uuplugin.asp">
 			<input type="hidden" name="next_page" value="">
 			<input type="hidden" name="next_host" value="">
-			<input type="hidden" name="sid_list" value="AdguardHomeConf;">
+			<input type="hidden" name="sid_list" value="UUPLUGIN;LANHostConfig;General;">
 			<input type="hidden" name="group_id" value="">
 			<input type="hidden" name="action_mode" value="">
 			<input type="hidden" name="action_script" value="">
-			<input type="hidden" name="wan_ipaddr" value="<% nvram_get_x("", " wan0_ipaddr"); %>" readonly="1">
-			<input type="hidden" name="wan_netmask" value="<% nvram_get_x("", " wan0_netmask"); %>" readonly="1">
-			<input type="hidden" name="dhcp_start" value="<% nvram_get_x("", " dhcp_start"); %>">
-			<input type="hidden" name="dhcp_end" value="<% nvram_get_x("", " dhcp_end"); %>">
 
 			<div class="container-fluid">
 				<div class="row-fluid">
@@ -123,96 +121,66 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<div class="box well grad_colour_dark_blue">
-									<h2 class="box_head round_top">
-										<#menu5_29#> - <#menu5_28#>
-									</h2>
+									<h2 class="box_head round_top">网易UU游戏加速器</h2>
 									<div class="round_bottom">
-										<div>
-											<ul class="nav nav-tabs" style="margin-bottom: 10px;">
-												<li id="sdnslink" style="display:none">
-													<a href="Advanced_smartdns.asp">
-														<#menu5_24#>
-													</a>
-												</li>
-												<li class="active">
-													<a href="Advanced_adguardhome.asp">
-														<#menu5_28#>
-													</a>
-												</li>
-											</ul>
-										</div>
 										<div class="row-fluid">
 											<div id="tabMenu" class="submenuBlock"></div>
 											<div class="alert alert-info" style="margin: 10px;">
-												<p>AdGuard Home
-													是一款全网广告拦截与反跟踪软件。在您将其安装完毕后，它将保护您所有家用设备，同时您不再需要安装任何客户端软件。随着物联网与连接设备的兴起，掌控您自己的整个网络环境变得越来越重要。默认用户名密码均为adguardhome，可在/etc/storage/adg.sh内修改。
-												</p>
-												AdGuard Home 主页<a href="https://adguard.com/"
-													target="blank"><i><u>https://adguard.com/</u></i></a>
+												一款由网易公司开发的游戏加速器软件，旨在提升游戏网络连接的稳定性和速度。<br>该加速器支持多种平台，包括PC、iOS、Android、PS、Xbox和NS等，几乎覆盖了所有主流游戏平台。
+												<div>首次绑定设备请启动后打开下方的UU云平台进行绑定，后续可使用手机下载 UU主机加速 APP进行管理。</div><br>
+												<span style="color:#FF0000;" class=""></span>
 											</div>
 
 											<table width="100%" align="center" cellpadding="4" cellspacing="0"
 												class="table">
 												<tr>
-													<th width="30%" style="border-top: 0 none;">启用AdGuardHome</th>
-													<td style="border-top: 0 none;">
+													<th>
+														<#running_status#>
+													</th>
+													<td id="uuplugin_status" colspan="2"></td>
+												</tr>
+												<tr id="uuplugin_enable_tr">
+													<th width="30%">启用UU加速器</th>
+													<td>
 														<div class="main_itoggle">
-															<div id="adg_enable_on_of">
-																<input type="checkbox" id="adg_enable_fake" <%
-																	nvram_match_x("", "adg_enable" , "1"
+															<div id="uu_enable_on_of">
+																<input type="checkbox" id="uu_enable_fake" <%
+																	nvram_match_x("", "uu_enable" , "1"
 																	, "value=1 checked" ); %>
-																<% nvram_match_x("", "adg_enable" , "0" , "value=0" );
-																	%> />
+																<% nvram_match_x("", "uu_enable" , "0" , "value=0" ); %>
+																	/>
 															</div>
 														</div>
 														<div style="position: absolute; margin-left: -10000px;">
-															<input type="radio" value="1" name="adg_enable"
-																id="adg_enable_1" class="input" value="1" <%
-																nvram_match_x("", "adg_enable" , "1" , "checked" ); %>
-															/><#checkbox_Yes#>
-																<input type="radio" value="0" name="adg_enable"
-																	id="adg_enable_0" class="input" value="0" <%
-																	nvram_match_x("", "adg_enable" , "0" , "checked" );
+															<input type="radio" value="1" name="uu_enable"
+																id="uu_enable_1" class="input" value="1" <%
+																nvram_match_x("", "uu_enable" , "1" , "checked" ); %> />
+															<#checkbox_Yes#>
+																<input type="radio" value="0" name="uu_enable"
+																	id="uu_enable_0" class="input" value="0" <%
+																	nvram_match_x("", "uu_enable" , "0" , "checked" );
 																	%> /><#checkbox_No#>
 														</div>
 													</td>
 												</tr>
-												</tr>
 												<tr>
-													<th><a class="help_tooltip" href="javascript: void(0)"
-															onmouseover="openTooltip(this, 1, 1);">DNS重定向</a></th>
-													<td>
-														<select name="adg_redirect" class="input" style="width: 200px">
-															<option value="0" <% nvram_match_x("","adg_redirect", "0"
-																,"selected"); %>>无</option>
-															<option value="1" <% nvram_match_x("","adg_redirect", "1"
-																,"selected"); %>>作为dnsmasq的上游服务器</option>
-															<option value="2" <% nvram_match_x("","adg_redirect", "2"
-																,"selected"); %>>重定向53端口到AdGuardHome</option>
-														</select>
-													</td>
-												</tr>
-												<tr>
-													<th>自定义下载源</th>
+													<th width="30%">自定义下载源</th>
 													<td>
 														<span
 															style="color:#888;">如需自定义下载地址，请在【自定义设置】-【脚本】-【启动后执行】中添加：<br>
 															<code
-																style="color: #000; background-color: #fdd;">nvram set adg_url="http://your-url/AdGuardHome"</code></span>
+																style="color: #000; background-color: #fdd;">nvram set uu_url="http://your-url/uu.tar.gz"</code></span>
 													</td>
 												</tr>
 												<tr>
-													<th>WEB管理地址:</th>
-													<td>
-														<a href="http://<% nvram_get_x("", " lan_ipaddr");
-															%>:3030">http://<% nvram_get_x("", "lan_ipaddr" ); %>
-																:3030</a>
+													<th width="30%">绑定地址</th>
+													<td><a href="<% nvram_get_x("", " uu_admin"); %>">UU云平台</a>
 													</td>
 												</tr>
-
-
+												<td></td>
+												<td></td>
 												<tr>
-													<td colspan="2" style="border-top: 0 none;">
+													<td colspan="4" style="border-top: 0 none;">
 														<br />
 														<center><input class="btn btn-primary" style="width: 219px"
 																type="button" value="<#CTL_apply#>"
