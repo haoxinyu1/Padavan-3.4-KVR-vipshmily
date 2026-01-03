@@ -554,8 +554,10 @@ end
 
 		for k, v in ipairs(nodeResult) do
 			for kk, vv in ipairs(v) do
-				if not vv._ignore then				
-					os.execute("dbus set ssconf_basic_json_" .. ssrindex .. "='" .. cjson.encode(vv) .. "'")
+				if not vv._ignore then
+					local json_data = cjson.encode(vv)
+					json_data = json_data:gsub("'", "'\\''")
+					os.execute("dbus set ssconf_basic_json_" .. ssrindex .. "='" .. json_data .. "'")
 					ssrindex = ssrindex + 1
 					add = add + 1
 
