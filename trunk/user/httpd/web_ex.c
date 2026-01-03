@@ -2347,6 +2347,51 @@ static int frps_status_hook(int eid, webs_t wp, int argc, char **argv)
 }
 #endif
 
+#if defined (APP_LUCKY)
+static int lucky_status_hook(int eid, webs_t wp, int argc, char **argv)
+{
+	int lucky_status_code = pids("lucky");
+	websWrite(wp, "function lucky_status() { return %d;}\n", lucky_status_code);
+	return 0;
+}
+#endif
+
+#if defined (APP_CLOUDFLARED)
+static int cloudflared_status_hook(int eid, webs_t wp, int argc, char **argv)
+{
+	int cloudflared_status_code = pids("cloudflared");
+	websWrite(wp, "function cloudflared_status() { return %d;}\n", cloudflared_status_code);
+	return 0;
+}
+#endif
+
+#if defined (APP_WXSEND)
+static int wxsend_status_hook(int eid, webs_t wp, int argc, char **argv)
+{
+	int wxsend_status_code = pids("wxsend_script.sh");
+	websWrite(wp, "function wxsend_status() { return %d;}\n", wxsend_status_code);
+	return 0;
+}
+#endif
+
+#if defined (APP_UUPLUGIN)
+static int uuplugin_status_hook(int eid, webs_t wp, int argc, char **argv)
+{
+	int uuplugin_status_code = pids("uuplugin");
+	websWrite(wp, "function uuplugin_status() { return %d;}\n", uuplugin_status_code);
+	return 0;
+}
+#endif
+
+#if defined (APP_V2RAYA)
+static int v2raya_status_hook(int eid, webs_t wp, int argc, char **argv)
+{
+	int v2raya_status_code = pids("v2raya");
+	websWrite(wp, "function v2raya_status() { return %d;}\n", v2raya_status_code);
+	return 0;
+}
+#endif
+
 static int update_action_hook(int eid, webs_t wp, int argc, char **argv)
 {
 	char *up_action = websGetVar(wp, "connect_action", "");
@@ -2606,6 +2651,31 @@ ej_firmware_caps_hook(int eid, webs_t wp, int argc, char **argv)
 #else
 	int found_app_frp = 0;
 #endif
+#if defined(APP_LUCKY)
+	int found_app_lucky = 1;
+#else
+	int found_app_lucky = 0;
+#endif
+#if defined(APP_CLOUDFLARED)
+	int found_app_cloudflared = 1;
+#else
+	int found_app_cloudflared = 0;
+#endif
+#if defined(APP_WXSEND)
+	int found_app_wxsend = 1;
+#else
+	int found_app_wxsend = 0;
+#endif
+#if defined(APP_UUPLUGIN)
+	int found_app_uuplugin = 1;
+#else
+	int found_app_uuplugin = 0;
+#endif
+#if defined(APP_V2RAYA)
+	int found_app_v2raya = 1;
+#else
+	int found_app_v2raya = 0;
+#endif
 #if defined(APP_VPNSVR)
 	int found_app_vpnsvr = 1;
 #else
@@ -2789,6 +2859,11 @@ ej_firmware_caps_hook(int eid, webs_t wp, int argc, char **argv)
 		"function found_app_aldriver() { return %d;}\n"
 		"function found_app_aliddns() { return %d;}\n"
 		"function found_app_frp() { return %d;}\n"
+		"function found_app_lucky() { return %d;}\n"
+		"function found_app_cloudflared() { return %d;}\n"
+		"function found_app_wxsend() { return %d;}\n"
+		"function found_app_uuplugin() { return %d;}\n"
+		"function found_app_v2raya() { return %d;}\n"
 		"function found_app_vpnsvr() { return %d;}\n"
 		"function found_app_vpncli() { return %d;}\n"
 		"function found_app_smartdns() { return %d;}\n"
@@ -2824,6 +2899,11 @@ ej_firmware_caps_hook(int eid, webs_t wp, int argc, char **argv)
 		found_app_aldriver,
 		found_app_aliddns,
 		found_app_frp,
+		found_app_lucky,
+		found_app_cloudflared,
+		found_app_wxsend,
+		found_app_uuplugin,
+		found_app_v2raya,
 		found_app_vpnsvr,
 		found_app_vpncli,
 		found_app_smartdns,
@@ -4576,6 +4656,21 @@ struct ej_handler ej_handlers[] =
 #if defined (APP_FRP)
 	{ "frpc_status", frpc_status_hook},
 	{ "frps_status", frps_status_hook},
+#endif
+#if defined (APP_LUCKY)
+	{ "lucky_status", lucky_status_hook},
+#endif
+#if defined (APP_CLOUDFLARED)
+	{ "cloudflared_status", cloudflared_status_hook},
+#endif
+#if defined (APP_WXSEND)
+	{ "wxsend_status", wxsend_status_hook},
+#endif
+#if defined (APP_UUPLUGIN)
+	{ "uuplugin_status", uuplugin_status_hook},
+#endif
+#if defined (APP_V2RAYA)
+	{ "v2raya_status", v2raya_status_hook},
 #endif
 #if defined (APP_ADBYBY)
 	{ "adbyby_action", adbyby_action_hook},

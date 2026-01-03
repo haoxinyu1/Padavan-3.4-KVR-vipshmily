@@ -652,7 +652,7 @@ send_authenticate( FILE *conn_fp )
 }
 
 static int
-auth_check( const char *authorization )
+auth_check( const char *authorization, const char *conn_ip, int do_wxsend )
 {
 	char authinfo[256];
 	int auth_len;
@@ -666,10 +666,31 @@ auth_check( const char *authorization )
 	authinfo[auth_len] = '\0';
 
 	/* Is this the right user and password? */
-	if (strcmp(authinfo, auth_basic_data) == 0)
+	if (strcmp(authinfo, auth_basic_data) == 0) {
 		return 1;
-
-	return 0;
+	} else {
+		if (!do_wxsend) {
+			char *username = strtok(authinfo, ":");
+			char *password = strtok(NULL, ":");
+			if (username != NULL && password != NULL) {
+				char log_message[512];
+				snprintf(log_message, sizeof(log_message), 
+					"用户IP:【%s】 用户名:【%s】 密码:【%s】 登录管理界面验证失败！", 
+					conn_ip, username ? username : "未知", password ? password : "未知");
+				logmessage("httpd", "%s", log_message);
+				if ((nvram_get_int("wxsend_login") == 2 || nvram_get_int("wxsend_login") == 3) && (nvram_get_int("wxsend_enable") == 1 || nvram_get_int("wxsend_enable") == 2)) {
+					const char *wx_title = nvram_get("wxsend_title");
+					if (!wx_title || strlen(wx_title) == 0) {
+						wx_title = "WEB登录";
+					}
+					char wx_command[1024];
+					snprintf(wx_command, sizeof(wx_command), "/usr/bin/wxsend.sh send_message \"【%s】\" \"用户IP：\" \"%s\" \"登录管理界面验证失败\"", wx_title, conn_ip);
+					system(wx_command);
+				}
+			}
+		}
+		return 0;
+	}
 }
 
 static int
@@ -979,9 +1000,14 @@ handle_request(FILE *conn_fp, const conn_item_t *item)
 #endif
 
 	do_logout = (strcmp(file, "Logout.asp") == 0) ? 1 : 0;
+	int do_wxsend = ((strcmp(file, "log_content.asp") == 0) || (strcmp(file, "system_status_data.asp") == 0) || (strcmp(file, "status_internet.asp") == 0)) ? 1 : 0;
+	char ip_str[INET6_ADDRSTRLEN];
+	if (convert_ip_to_string(&conn_ip, ip_str, sizeof(ip_str)) != 0) {
+		snprintf(ip_str, sizeof(ip_str), "Unknown");
+	}
 
 	if (handler->need_auth && login_state > 1 && !do_logout) {
-		if (!auth_check(authorization)) {
+		if (!auth_check(authorization, ip_str, do_wxsend)) {
 			http_logout(&conn_ip);
 			if (method_id == HTTP_METHOD_POST)
 				eat_post_data(conn_fp, clen);
@@ -989,8 +1015,23 @@ handle_request(FILE *conn_fp, const conn_item_t *item)
 			return;
 		}
 		
-		if (login_state == 2)
+		if (login_state == 2) {
 			http_login(&conn_ip);
+			if (!do_wxsend) {
+				char log_message[512];
+				snprintf(log_message, sizeof(log_message), "用户IP:【%s】 成功登录管理界面！", ip_str);
+				logmessage("httpd", "%s", log_message);
+				if ((nvram_get_int("wxsend_login") == 1 || nvram_get_int("wxsend_login") == 3) && (nvram_get_int("wxsend_enable") == 1 || nvram_get_int("wxsend_enable") == 2)) {
+					const char *wx_title = nvram_get("wxsend_title");
+					if (!wx_title || strlen(wx_title) == 0) {
+						wx_title = "WEB登录";
+					}
+					char wx_command[1024];
+					snprintf(wx_command, sizeof(wx_command), "/usr/bin/wxsend.sh send_message \"【%s】\" \"用户IP：\" \"%s\" \"成功登录管理界面！\"", wx_title, ip_str);
+					system(wx_command);
+				}
+			}
+		}
 	}
 
 	if (method_id == HTTP_METHOD_POST) {

@@ -1232,6 +1232,105 @@
 			{"SdnsList", "Group", ARGV((char*)variables_SmartdnsConf_SdnsList, "8", "55", "sdnss_staticnum_x"), EVM_RESTART_SMARTDNS},
 	};
 #endif
+
+#if defined(APP_LUCKY)
+	struct variable variables_LUCKY[] = {
+			{"lucky_enable", "", NULL, EVM_RESTART_LUCKY},
+			{"lucky_cmd", "", NULL, EVM_RESTART_LUCKY},
+			{"lucky_bin", "", NULL, EVM_RESTART_LUCKY},
+			{"lucky_daji", "", NULL, EVM_RESTART_LUCKY},
+			{"lucky_tag", "", NULL, EVM_RESTART_LUCKY},
+			{"lucky_extra", "", NULL, EVM_RESTART_LUCKY},
+			{"scripts.lucky.conf", "File", NULL, EVM_RESTART_LUCKY},
+			{0,0,0,0}
+	};
+#endif
+
+#if defined(APP_CLOUDFLARED)
+	struct variable variables_CLOUDFLARED[] = {
+			{"cloudflared_enable", "", NULL, EVM_RESTART_CLOUDFLARED},
+			{"cloudflared_cmd", "", NULL, EVM_RESTART_CLOUDFLARED},
+			{"cloudflared_bin", "", NULL, EVM_RESTART_CLOUDFLARED},
+			{"cloudflared.log", "File", NULL, EVM_RESTART_CLOUDFLARED},
+			{0,0,0,0}
+	};
+#endif
+
+#if defined(APP_WXSEND)
+	struct variable variables_WXSEND[] = {
+			{"wxsend_enable", "", NULL, EVM_RESTART_WXSEND},
+			{"wxsend_appid", "", NULL, EVM_RESTART_WXSEND},
+			{"wxsend_appsecret", "", NULL, EVM_RESTART_WXSEND},
+			{"wxsend_touser", "", NULL, EVM_RESTART_WXSEND},
+			{"wxsend_template_id", "", NULL, EVM_RESTART_WXSEND},
+			{"wxsend_webhook", "", NULL, EVM_RESTART_WXSEND},
+			{"wxsend_title", "", NULL, EVM_RESTART_WXSEND},
+			{"wxsend_content", "", NULL, EVM_RESTART_WXSEND},
+			{"wxsend_notify_1", "", NULL, EVM_RESTART_WXSEND},
+			{"wxsend_notify_2", "", NULL, EVM_RESTART_WXSEND},
+			{"wxsend_notify_3", "", NULL, EVM_RESTART_WXSEND},
+			{"wxsend_notify_4", "", NULL, EVM_RESTART_WXSEND},
+			{"wxsend_login", "", NULL, EVM_RESTART_WXSEND},
+			{"wxsend_ssh", "", NULL, EVM_RESTART_WXSEND},
+			{"scripts.wxsend_script.sh", "File", NULL, EVM_RESTART_WXSEND},
+			{0,0,0,0}
+	};
+#endif
+
+#endif
+
+#if defined(APP_UUPLUGIN)
+	struct variable variables_UUPLUGIN[] = {
+			{"uuplugin_enable", "", NULL, EVM_RESTART_UUPLUGIN},
+			{"w_uuplugin", "", NULL, FALSE},
+			{0,0,0,0}
+	};
+#endif
+
+#if defined(APP_V2RAYA)
+	struct variable variables_V2RAYA[] = {
+			{"v2raya_enable", "", NULL, EVM_RESTART_V2RAYA},
+			{"v2raya_address", "", NULL, EVM_RESTART_V2RAYA},
+			{"v2raya_config", "", NULL, EVM_RESTART_V2RAYA},
+			{"v2raya_confdir", "", NULL, EVM_RESTART_V2RAYA},
+			{"v2raya_assetsdir", "", NULL, EVM_RESTART_V2RAYA},
+			{"v2raya_transparent", "", NULL, EVM_RESTART_V2RAYA},
+			{"v2raya_core_hook", "", NULL, EVM_RESTART_V2RAYA},
+			{"v2raya_plugin", "", NULL, EVM_RESTART_V2RAYA},
+			{"v2raya_ipv6", "", NULL, EVM_RESTART_V2RAYA},
+			{"v2raya_log", "", NULL, EVM_RESTART_V2RAYA},
+			{"v2raya_bin", "", NULL, EVM_RESTART_V2RAYA},
+			{"v2raya_v2ray", "", NULL, EVM_RESTART_V2RAYA},
+			{"v2raya_cmd", "", NULL, EVM_RESTART_V2RAYA},
+			{"v2raya_env", "", NULL, EVM_RESTART_V2RAYA},
+			{"scripts.v2raya.toml", "File", NULL, EVM_RESTART_V2RAYA},
+			{"w_v2raya", "", NULL, FALSE},
+			{0,0,0,0}
+	};
+#endif
+
+    struct variable variables_DwebConf[] = {
+			{"w_ai", "", NULL, FALSE},
+			{"w_vpn_s", "", NULL, FALSE},
+			{"w_vpn_c", "", NULL, FALSE},
+			{"w_wnet", "", NULL, FALSE},
+			{"w_sys", "", NULL, FALSE},
+			{"w_usb", "", NULL, FALSE},
+			{"w_net", "", NULL, FALSE},
+			{"w_log", "", NULL, FALSE},
+			{"w_scu", "", NULL, FALSE},
+			{"w_dnsf", "", NULL, FALSE},
+			{"w_ss", "", NULL, FALSE},
+			{"w_men", "", NULL, FALSE},
+			{"w_adbyby", "", NULL, FALSE},
+			{"w_pdnsd", "", NULL, FALSE},
+			{"w_aliddns", "", NULL, FALSE},
+			{"w_frp", "", NULL, FALSE},
+			{"w_lucky", "", NULL, FALSE},
+			{"w_wxsend", "", NULL, FALSE},
+			{"w_cloudflared", "", NULL, FALSE},
+	};
+
 	struct variable variables_WLANConfig11b[] = {
 			{"rt_ssid", "", NULL, EVM_RESTART_WIFI2},
 			{"rt_ssid2", "", NULL, EVM_RESTART_WIFI2},
@@ -1385,6 +1484,22 @@
 #if defined(APP_FRP)
 		{"FrpConf",		variables_FrpConf},
 #endif
+#if defined(APP_LUCKY)
+		{"LUCKY",		variables_LUCKY},
+#endif
+#if defined(APP_CLOUDFLARED)
+		{"CLOUDFLARED",		variables_CLOUDFLARED},
+#endif
+#if defined(APP_WXSEND)
+		{"WXSEND",		variables_WXSEND},
+#endif
+#if defined(APP_UUPLUGIN)
+		{"UUPLUGIN",		variables_UUPLUGIN},
+#endif
+#if defined(APP_V2RAYA)
+		{"V2RAYA",		variables_V2RAYA},
+#endif
+
 		{"DwebConf",			variables_DwebConf},
 		{"LANGUAGE",			variables_Language},
 		{0,0}
@@ -1437,11 +1552,19 @@
 		{EVM_RESTART_NFSD,		EVT_RESTART_NFSD,		RCN_RESTART_NFSD,	0},
 #endif
 #if defined(APP_MINIDLNA)
-		{EVM_RESTART_DMS,		EVT_RESTART_DMS,		RCN_RESTART_DMS,	0},
+		//{EVM_RESTART_DMS,		EVT_RESTART_DMS,		RCN_RESTART_DMS,	0},
 #endif
+#if defined(APP_UUPLUGIN)
+		{EVM_RESTART_UUPLUGIN,		EVT_RESTART_UUPLUGIN,		RCN_RESTART_UUPLUGIN,	0},
+#endif
+
 #if defined(APP_FIREFLY)
-		{EVM_RESTART_ITUNES,		EVT_RESTART_ITUNES,		RCN_RESTART_ITUNES,	0},
+		//{EVM_RESTART_ITUNES,		EVT_RESTART_ITUNES,		RCN_RESTART_ITUNES,	0},
 #endif
+#if defined(APP_V2RAYA)
+		{EVM_RESTART_V2RAYA,		EVT_RESTART_V2RAYA,		RCN_RESTART_V2RAYA,	0},
+#endif
+
 #if defined(APP_TRMD)
 		{EVM_RESTART_TRMD,		EVT_RESTART_TRMD,		RCN_RESTART_TRMD,	EVM_RESTART_FIREWALL},
 #endif
@@ -1504,6 +1627,15 @@
 #endif
 #if defined(APP_FRP)
 		{EVM_RESTART_FRP,		EVT_RESTART_FRP,		RCN_RESTART_FRP, 	0},
+#endif
+#if defined(APP_LUCKY)
+		{EVM_RESTART_LUCKY,		EVT_RESTART_LUCKY,		RCN_RESTART_LUCKY, 	0},
+#endif
+#if defined(APP_CLOUDFLARED)
+		{EVM_RESTART_CLOUDFLARED,	EVT_RESTART_CLOUDFLARED,	RCN_RESTART_CLOUDFLARED, 0},
+#endif
+#if defined(APP_WXSEND)
+		{EVM_RESTART_WXSEND,		EVT_RESTART_WXSEND,		RCN_RESTART_WXSEND, 	0},
 #endif
 		{EVM_RESTART_FIREWALL,		EVT_RESTART_FIREWALL,		RCN_RESTART_FIREWALL,	0},
 		{0,0,0,0}
