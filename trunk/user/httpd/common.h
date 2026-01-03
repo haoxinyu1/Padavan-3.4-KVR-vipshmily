@@ -86,34 +86,36 @@ typedef u_int8_t u8;
 
 /* --- Third-Party Plugins (第三方扩展功能) --- */
 #define EVM_RESTART_LUCKY		    (1ULL << 16) // [第三方] Lucky插件
-#define EVM_RESTART_UUPLUGIN		(1ULL << 39) // [第三方] UU加速器 (原DMS)
-#define EVM_RESTART_V2RAYA		(1ULL << 40) // [第三方] V2RayA (原iTunes)
+#define EVM_RESTART_UUPLUGIN		(1ULL << 39) // [第三方] UU加速器
+#define EVM_RESTART_V2RAYA		(1ULL << 40) // [第三方] V2RayA
 #define EVM_RESTART_TRMD		(1ULL << 41) // [第三方] Transmission下载
+
 #define EVM_RESTART_ARIA		(1ULL << 42) // [第三方] Aria2下载
-#define EVM_RESTART_SCUT		(1ULL << 43) // [第三方] 华南理工认证
-#define EVM_RESTART_TTYD		(1ULL << 44) // [第三方] 网页终端TTYD
-#define EVM_RESTART_VLMCSD		(1ULL << 45) // [第三方] KMS激活服务
-#define EVM_RESTART_IPERF3		(1ULL << 46) // [第三方] 带宽测试工具
-#define EVM_RESTART_DNSFORWARDER	(1ULL << 47) // [第三方] DNS转发服务
-#define EVM_RESTART_SHADOWSOCKS	(1ULL << 48) // [第三方] SS代理客户端
-#define EVM_RESTART_SS_TUNNEL		(1ULL << 49) // [第三方] SS转发隧道
-#define EVM_RESTART_MENTOHUST		(1ULL << 50) // [第三方] 锐捷认证客户端
-#define EVM_RESTART_ADBYBY		    (1ULL << 51) // [第三方] Adbyby去广告
-#define EVM_RESTART_ALIDDNS		    (1ULL << 52) // [第三方] 阿里DDNS动态域名
-#define EVM_RESTART_FRP		    (1ULL << 53) // [第三方] FRP内网穿透
-#define EVM_RESTART_WXSEND		    (1ULL << 54) // [第三方] 微信推送通知
-#define EVM_RESTART_CLOUDFLARED		    (1ULL << 55) // [第三方] Cloudflared隧道
-#define EVM_RESTART_SMARTDNS		    (1ULL << 56) // [第三方] SmartDNS防污染
-#define EVM_RESTART_ADGUARDHOME		    (1ULL << 57) // [第三方] AdGuardHome去广告
-#define EVM_RESTART_ZEROTIER		    (1ULL << 58) // [第三方] ZeroTier异地组网
-#define EVM_RESTART_DDNSTO		    (1ULL << 59) // [第三方] DDNSTO内网穿透
-#define EVM_RESTART_ALDRIVER		    (1ULL << 60) // [第三方] 阿里云盘挂载
-#define EVM_RESTART_WIREGUARD		    (1ULL << 61) // [第三方] WireGuard异地组网
-#define EVM_RESTART_SQM		    (1ULL << 62) // [第三方] SQM流量控制(QoS)
+// #define EVM_RESTART_SCUT		(1ULL << 43) // [第三方] 华南理工认证 (已禁用，位号已释放)
+#define EVM_RESTART_TTYD		(1ULL << 43) // [第三方] 网页终端TTYD
+#define EVM_RESTART_VLMCSD		(1ULL << 44) // [第三方] KMS激活服务
+#define EVM_RESTART_IPERF3		(1ULL << 45) // [第三方] 带宽测试工具
+#define EVM_RESTART_DNSFORWARDER	(1ULL << 46) // [第三方] DNS转发服务
+#define EVM_RESTART_SHADOWSOCKS	(1ULL << 47) // [第三方] SS代理客户端
+#define EVM_RESTART_SS_TUNNEL		(1ULL << 48) // [第三方] SS转发隧道
+#define EVM_RESTART_MENTOHUST		(1ULL << 49) // [第三方] 锐捷认证客户端
+#define EVM_RESTART_ADBYBY		    (1ULL << 50) // [第三方] Adbyby去广告
+#define EVM_RESTART_ALIDDNS		    (1ULL << 51) // [第三方] 阿里DDNS动态域名
+#define EVM_RESTART_FRP		    (1ULL << 52) // [第三方] FRP内网穿透
+#define EVM_RESTART_WXSEND		    (1ULL << 53) // [第三方] 微信推送通知
+#define EVM_RESTART_CLOUDFLARED		    (1ULL << 54) // [第三方] Cloudflared隧道
+#define EVM_RESTART_SMARTDNS		    (1ULL << 55) // [第三方] SmartDNS防污染
+#define EVM_RESTART_ADGUARDHOME		    (1ULL << 56) // [第三方] AdGuardHome去广告
+#define EVM_RESTART_ZEROTIER		    (1ULL << 57) // [第三方] ZeroTier异地组网
+#define EVM_RESTART_DDNSTO		    (1ULL << 58) // [第三方] DDNSTO内网穿透
+#define EVM_RESTART_ALDRIVER		    (1ULL << 59) // [第三方] 阿里云盘挂载
+#define EVM_RESTART_WIREGUARD		    (1ULL << 60) // [第三方] WireGuard异地组网
+#define EVM_RESTART_SQM		    (1ULL << 61) // [第三方] SQM流量控制(QoS)
 
 /* --- System Control Flags (系统控制标志) --- */
-#define EVM_RESTART_REBOOT		(1ULL << 63) // [系统] 执行系统重启
-#define EVM_BLOCK_UNSAFE		(1ULL << 65) /* [系统] 安全敏感标记 (大于64位，特殊用途) */
+#define EVM_RESTART_REBOOT		(1ULL << 62) // [系统] 执行系统重启
+#define EVM_BLOCK_UNSAFE		(1ULL << 63) // [系统] 安全敏感标记
+
 
 
 #define EVT_RESTART_FIREWALL		1
