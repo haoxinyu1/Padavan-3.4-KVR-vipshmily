@@ -93,8 +93,8 @@ typedef u_int8_t u8;
 #define EVM_RESTART_ARIA		(1ULL << 42) // [第三方] Aria2下载
 // #define EVM_RESTART_SCUT		(1ULL << 43) // [第三方] 华南理工认证 (已禁用，位号已释放)
 #define EVM_RESTART_TTYD		(1ULL << 43) // [第三方] 网页终端TTYD
-#define EVM_RESTART_VLMCSD		(1ULL << 44) // [第三方] KMS激活服务
-#define EVM_RESTART_IPERF3		(1ULL << 45) // [第三方] 带宽测试工具
+// #define EVM_RESTART_VLMCSD		(1ULL << 44) // [第三方] KMS激活服务
+// #define EVM_RESTART_IPERF3		(1ULL << 45) // [第三方] 带宽测试工具
 #define EVM_RESTART_DNSFORWARDER	(1ULL << 46) // [第三方] DNS转发服务
 #define EVM_RESTART_SHADOWSOCKS	(1ULL << 47) // [第三方] SS代理客户端
 #define EVM_RESTART_SS_TUNNEL		(1ULL << 48) // [第三方] SS转发隧道
@@ -107,7 +107,7 @@ typedef u_int8_t u8;
 #define EVM_RESTART_SMARTDNS		    (1ULL << 55) // [第三方] SmartDNS防污染
 #define EVM_RESTART_ADGUARDHOME		    (1ULL << 56) // [第三方] AdGuardHome去广告
 #define EVM_RESTART_ZEROTIER		    (1ULL << 57) // [第三方] ZeroTier异地组网
-#define EVM_RESTART_DDNSTO		    (1ULL << 58) // [第三方] DDNSTO内网穿透
+// #define EVM_RESTART_DDNSTO		    (1ULL << 58) // [第三方] DDNSTO内网穿透
 #define EVM_RESTART_ALDRIVER		    (1ULL << 59) // [第三方] 阿里云盘挂载
 #define EVM_RESTART_WIREGUARD		    (1ULL << 60) // [第三方] WireGuard异地组网
 #define EVM_RESTART_SQM		    (1ULL << 61) // [第三方] SQM流量控制(QoS)
