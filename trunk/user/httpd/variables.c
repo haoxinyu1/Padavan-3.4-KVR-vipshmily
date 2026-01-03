@@ -307,7 +307,7 @@
 		};
 
 	struct variable variables_Storage[] = {
-			{"computer_name", "", NULL, EVM_RESTART_DHCPD|EVM_RESTART_FTPD|EVM_RESTART_NMBD|EVM_RESTART_DMS|EVM_RESTART_ITUNES},
+			{"computer_name", "", NULL, EVM_RESTART_DHCPD|EVM_RESTART_FTPD|EVM_RESTART_NMBD},
 #if defined(APP_SMBD)
 			{"enable_samba", "", NULL, EVM_RESTART_SMBD},
 			{"st_samba_fp", "", NULL, EVM_RESTART_SYSCTL},
@@ -337,7 +337,7 @@
 #if defined(APP_NFSD)
 			{"nfsd_enable", "", NULL, EVM_RESTART_NFSD},
 #endif
-#if defined(APP_MINIDLNA)
+#if defined(APP_MINIDLNA) && defined(EVM_RESTART_DMS)
 			{"apps_dms", "", NULL, EVM_RESTART_DMS},
 			{"dlna_disc", "", NULL, EVM_RESTART_DMS},
 			{"dlna_root", "", NULL, EVM_RESTART_DMS},
@@ -347,9 +347,10 @@
 			{"dlna_src3", "", NULL, EVM_RESTART_DMS},
 			{"dlna_rescan", "", NULL, EVM_RESTART_DMS},
 #endif
-#if defined(APP_FIREFLY)
+#if defined(APP_FIREFLY) && defined(EVM_RESTART_ITUNES)
 			{"apps_itunes", "", NULL, EVM_RESTART_ITUNES},
 #endif
+
 #if defined(APP_TRMD)
 			{"trmd_enable", "", NULL,EVM_RESTART_TRMD},
 			{"trmd_pport", "", NULL, EVM_RESTART_TRMD},
@@ -1277,8 +1278,6 @@
 	};
 #endif
 
-#endif
-
 #if defined(APP_UUPLUGIN)
 	struct variable variables_UUPLUGIN[] = {
 			{"uuplugin_enable", "", NULL, EVM_RESTART_UUPLUGIN},
@@ -1309,27 +1308,6 @@
 	};
 #endif
 
-    struct variable variables_DwebConf[] = {
-			{"w_ai", "", NULL, FALSE},
-			{"w_vpn_s", "", NULL, FALSE},
-			{"w_vpn_c", "", NULL, FALSE},
-			{"w_wnet", "", NULL, FALSE},
-			{"w_sys", "", NULL, FALSE},
-			{"w_usb", "", NULL, FALSE},
-			{"w_net", "", NULL, FALSE},
-			{"w_log", "", NULL, FALSE},
-			{"w_scu", "", NULL, FALSE},
-			{"w_dnsf", "", NULL, FALSE},
-			{"w_ss", "", NULL, FALSE},
-			{"w_men", "", NULL, FALSE},
-			{"w_adbyby", "", NULL, FALSE},
-			{"w_pdnsd", "", NULL, FALSE},
-			{"w_aliddns", "", NULL, FALSE},
-			{"w_frp", "", NULL, FALSE},
-			{"w_lucky", "", NULL, FALSE},
-			{"w_wxsend", "", NULL, FALSE},
-			{"w_cloudflared", "", NULL, FALSE},
-	};
 
 	struct variable variables_WLANConfig11b[] = {
 			{"rt_ssid", "", NULL, EVM_RESTART_WIFI2},
