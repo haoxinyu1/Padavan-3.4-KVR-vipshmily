@@ -229,8 +229,10 @@
 			{"mtd_rwfs_mount", "", NULL, FALSE},
 #endif
 #if defined (APP_TTYD)
+#ifdef EVM_RESTART_TTYD
 			{"ttyd_enable", "", NULL, EVM_RESTART_TTYD},
 			{"ttyd_port", "", NULL, EVM_RESTART_TTYD},
+#endif
 #endif
 #if defined (APP_VLMCSD)
 #ifdef EVM_RESTART_VLMCSD
@@ -356,14 +358,18 @@
 #endif
 
 #if defined(APP_TRMD)
+#ifdef EVM_RESTART_TRMD
 			{"trmd_enable", "", NULL,EVM_RESTART_TRMD},
 			{"trmd_pport", "", NULL, EVM_RESTART_TRMD},
 			{"trmd_rport", "", NULL, EVM_RESTART_TRMD},
 #endif
+#endif
 #if defined(APP_ARIA)
+#ifdef EVM_RESTART_ARIA
 			{"aria_enable", "", NULL,EVM_RESTART_ARIA},
 			{"aria_pport", "", NULL, EVM_RESTART_ARIA},
 			{"aria_rport", "", NULL, EVM_RESTART_ARIA},
+#endif
 #endif
 #if (BOARD_NUM_UPHY_USB3 > 0)
 			{"usb3_disable", "", NULL, EVM_RESTART_REBOOT},
@@ -775,6 +781,7 @@
 			{"ddns2_user", "", NULL, EVM_RESTART_DDNS },
 			{"ddns2_pass", "", NULL, EVM_RESTART_DDNS },
 #if defined(APP_ALIDDNS)
+#ifdef EVM_RESTART_ALIDDNS
 			{"aliddns_enable", "", NULL, EVM_RESTART_ALIDDNS },
 			{"aliddns_interval", "", NULL, EVM_RESTART_ALIDDNS },
 			{"aliddns_ttl", "", NULL, EVM_RESTART_ALIDDNS },
@@ -787,6 +794,7 @@
 			{"aliddns_domain2", "", NULL, EVM_RESTART_ALIDDNS },
 			{"aliddns_domain6", "", NULL, EVM_RESTART_ALIDDNS },
 			{"scripts.ddns_script.sh", "File", NULL, EVM_RESTART_ALIDDNS},
+#endif
 #endif
 			{"ManualDHCPList", "Group", ARGV((char*)variables_LANHostConfig_ManualDHCPList, "8", "55", "dhcp_staticnum_x"), EVM_RESTART_DHCPD},
 			{"VPNSACLList", "Group", ARGV((char*)variables_LANHostConfig_VPNSACLList, "8", "107", "vpns_num_x"), EVM_RESTART_VPNSVR},
@@ -1537,31 +1545,45 @@
 		//{EVM_RESTART_DMS,		EVT_RESTART_DMS,		RCN_RESTART_DMS,	0},
 #endif
 #if defined(APP_UUPLUGIN)
+#ifdef EVM_RESTART_UUPLUGIN
 		{EVM_RESTART_UUPLUGIN,		EVT_RESTART_UUPLUGIN,		RCN_RESTART_UUPLUGIN,	0},
+#endif
 #endif
 
 #if defined(APP_FIREFLY)
 		//{EVM_RESTART_ITUNES,		EVT_RESTART_ITUNES,		RCN_RESTART_ITUNES,	0},
 #endif
 #if defined(APP_V2RAYA)
+#ifdef EVM_RESTART_V2RAYA
 		{EVM_RESTART_V2RAYA,		EVT_RESTART_V2RAYA,		RCN_RESTART_V2RAYA,	0},
+#endif
 #endif
 
 #if defined(APP_TRMD)
+#ifdef EVM_RESTART_TRMD
 		{EVM_RESTART_TRMD,		EVT_RESTART_TRMD,		RCN_RESTART_TRMD,	EVM_RESTART_FIREWALL},
 #endif
+#endif
 #if defined(APP_ARIA)
+#ifdef EVM_RESTART_ARIA
 		{EVM_RESTART_ARIA,		EVT_RESTART_ARIA,		RCN_RESTART_ARIA,	EVM_RESTART_FIREWALL},
 #endif
 #endif
+#endif
 #if defined(APP_SCUT)
+#ifdef EVM_RESTART_SCUT
 		{EVM_RESTART_SCUT,		EVT_RESTART_SCUT,		RCN_RESTART_SCUT,	0},
 #endif
+#endif
 #if defined(APP_MENTOHUST)
+#ifdef EVM_RESTART_MENTOHUST
 		{EVM_RESTART_MENTOHUST,		EVT_RESTART_MENTOHUST,		RCN_RESTART_MENTOHUST,	0},
 #endif
+#endif
 #if defined(APP_TTYD)
+#ifdef EVM_RESTART_TTYD
 		{EVM_RESTART_TTYD,		EVT_RESTART_TTYD,		RCN_RESTART_TTYD,	0},
+#endif
 #endif
 #if defined(APP_VLMCSD)
 #ifdef EVM_RESTART_VLMCSD
@@ -1574,54 +1596,86 @@
 #endif
 #endif
 #if defined(APP_ADGUARDHOME)
+#ifdef EVM_RESTART_ADGUARDHOME
 		{EVM_RESTART_ADGUARDHOME,		EVT_RESTART_ADGUARDHOME,		RCN_RESTART_ADGUARDHOME,	0},
+#endif
 #endif
 
 #if defined(APP_DNSFORWARDER)
+#ifdef EVM_RESTART_DNSFORWARDER
 		{EVM_RESTART_DNSFORWARDER,	EVT_RESTART_DNSFORWARDER,	RCN_RESTART_DNSFORWARDER, 0},
 #endif
+#endif
 #if defined(APP_SHADOWSOCKS)
+#ifdef EVM_RESTART_SHADOWSOCKS
 		{EVM_RESTART_SHADOWSOCKS,	EVT_RESTART_SHADOWSOCKS,	RCN_RESTART_SHADOWSOCKS,  0},
+#endif
+#ifdef EVM_RESTART_SS_TUNNEL
 		{EVM_RESTART_SS_TUNNEL,		EVT_RESTART_SS_TUNNEL,		RCN_RESTART_SS_TUNNEL,	  0},
 #endif
+#endif
 #if defined(APP_ZEROTIER)
+#ifdef EVM_RESTART_ZEROTIER
 		{EVM_RESTART_ZEROTIER,		EVT_RESTART_ZEROTIER,		RCN_RESTART_ZEROTIER,	0},
 #endif
+#endif
 #if defined(APP_DDNSTO)
+#ifdef EVM_RESTART_DDNSTO
 		{EVM_RESTART_DDNSTO,		EVT_RESTART_DDNSTO,		RCN_RESTART_DDNSTO,	0},
 #endif
+#endif
 #if defined(APP_ALDRIVER)
+#ifdef EVM_RESTART_ALDRIVER
 		{EVM_RESTART_ALDRIVER,		EVT_RESTART_ALDRIVER,		RCN_RESTART_ALDRIVER,	0},
 #endif
+#endif
 #if defined(APP_SQM)
+#ifdef EVM_RESTART_SQM
 		{EVM_RESTART_SQM,		EVT_RESTART_SQM,		RCN_RESTART_SQM,	0},
 #endif
+#endif
 #if defined(APP_WIREGUARD)
+#ifdef EVM_RESTART_WIREGUARD
 		{EVM_RESTART_WIREGUARD,		EVT_RESTART_WIREGUARD,		RCN_RESTART_WIREGUARD,	0},
 #endif
+#endif
 #if defined(APP_SMARTDNS)
+#ifdef EVM_RESTART_SMARTDNS
 		{EVM_RESTART_SMARTDNS,		EVT_RESTART_SMARTDNS,		RCN_RESTART_SMARTDNS,	0},
 #endif
+#endif
 #if defined(APP_ADBYBY)
+#ifdef EVM_RESTART_ADBYBY
 		{EVM_RESTART_ADBYBY,		EVT_RESTART_ADBYBY,		RCN_RESTART_ADBYBY,	0},
 #endif
+#endif
 #if defined(APP_ALIDDNS)
+#ifdef EVM_RESTART_ALIDDNS
 		{EVM_RESTART_ALIDDNS,		EVT_RESTART_ALIDDNS,		RCN_RESTART_ALIDDNS,	0},
+#endif
 #endif
 #if defined(APP_SMBD) || defined(APP_NMBD)
 		{EVM_RESTART_NMBD,		EVT_RESTART_NMBD,		RCN_RESTART_NMBD,	0},
 #endif
 #if defined(APP_FRP)
+#ifdef EVM_RESTART_FRP
 		{EVM_RESTART_FRP,		EVT_RESTART_FRP,		RCN_RESTART_FRP, 	0},
 #endif
+#endif
 #if defined(APP_LUCKY)
+#ifdef EVM_RESTART_LUCKY
 		{EVM_RESTART_LUCKY,		EVT_RESTART_LUCKY,		RCN_RESTART_LUCKY, 	0},
 #endif
+#endif
 #if defined(APP_CLOUDFLARED)
+#ifdef EVM_RESTART_CLOUDFLARED
 		{EVM_RESTART_CLOUDFLARED,	EVT_RESTART_CLOUDFLARED,	RCN_RESTART_CLOUDFLARED, 0},
 #endif
+#endif
 #if defined(APP_WXSEND)
+#ifdef EVM_RESTART_WXSEND
 		{EVM_RESTART_WXSEND,		EVT_RESTART_WXSEND,		RCN_RESTART_WXSEND, 	0},
+#endif
 #endif
 		{EVM_RESTART_FIREWALL,		EVT_RESTART_FIREWALL,		RCN_RESTART_FIREWALL,	0},
 		{0,0,0,0}
