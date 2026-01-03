@@ -1230,6 +1230,18 @@ handle_notifications(void)
 			restart_itunes();
 		}
 #endif
+#if defined(APP_UUPLUGIN)
+		else if (strcmp(entry->d_name, RCN_RESTART_UUPLUGIN) == 0)
+		{
+			restart_uuplugin();
+		}
+#endif
+#if defined(APP_V2RAYA)
+		else if (strcmp(entry->d_name, RCN_RESTART_V2RAYA) == 0)
+		{
+			restart_v2raya();
+		}
+#endif
 #if defined(APP_TRMD)
 		else if (strcmp(entry->d_name, RCN_RESTART_TRMD) == 0)
 		{
@@ -1386,6 +1398,24 @@ handle_notifications(void)
 		else if (strcmp(entry->d_name, RCN_RESTART_FRP) == 0)
 		{
 			restart_frp();
+		}
+#endif
+#if defined(APP_LUCKY)
+		else if (strcmp(entry->d_name, RCN_RESTART_LUCKY) == 0)
+		{
+			restart_lucky();
+		}
+#endif
+#if defined(APP_CLOUDFLARED)
+		else if (strcmp(entry->d_name, RCN_RESTART_CLOUDFLARED) == 0)
+		{
+			restart_cloudflared();
+		}
+#endif
+#if defined(APP_WXSEND)
+		else if (strcmp(entry->d_name, RCN_RESTART_WXSEND) == 0)
+		{
+			restart_wxsend();
 		}
 #endif
 #if defined(APP_DNSFORWARDER)

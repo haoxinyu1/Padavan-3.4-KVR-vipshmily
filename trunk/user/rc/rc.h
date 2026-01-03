@@ -613,6 +613,34 @@ void stop_frp(void);
 void start_frp(void);
 void restart_frp(void);
 #endif
+#if defined(APP_LUCKY)
+void stop_lucky(void);
+void start_lucky(void);
+void restart_lucky(void);
+#endif
+#if defined(APP_CLOUDFLARED)
+void stop_cloudflared(void);
+void start_cloudflared(void);
+void restart_cloudflared(void);
+#endif
+#if defined(APP_WXSEND)
+void stop_wxsend(void);
+void start_wxsend(void);
+void restart_wxsend(void);
+#endif
+
+#if defined(APP_UUPLUGIN)
+void stop_uuplugin(void);
+void start_uuplugin(void);
+void restart_uuplugin(void);
+#endif
+
+#if defined(APP_V2RAYA)
+void stop_v2raya(void);
+void start_v2raya(void);
+void restart_v2raya(void);
+#endif
+
 /* services_ex.c */
 int fill_dnsmasq_servers(void);
 int is_dns_dhcpd_run(void);

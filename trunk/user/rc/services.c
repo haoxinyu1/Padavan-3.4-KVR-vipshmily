@@ -611,6 +611,92 @@ void restart_frp(void){
 }
 #endif
 
+#if defined(APP_LUCKY)
+void stop_lucky(void){
+	eval("/usr/bin/lucky.sh","stop");
+}
+
+void start_lucky(void){
+	int lucky_enable = nvram_get_int("lucky_enable");
+	if ( lucky_enable == 1)
+		eval("/usr/bin/lucky.sh","start");
+}
+
+void restart_lucky(void){
+	stop_lucky();
+	start_lucky();
+}
+#endif
+
+#if defined(APP_CLOUDFLARED)
+void stop_cloudflared(void){
+	eval("/usr/bin/cloudflared.sh","stop");
+}
+
+void start_cloudflared(void){
+	int cloudflared_enable = nvram_get_int("cloudflared_enable");
+	if ( cloudflared_enable == 1)
+		eval("/usr/bin/cloudflared.sh","start");
+}
+
+void restart_cloudflared(void){
+	stop_cloudflared();
+	start_cloudflared();
+}
+#endif
+
+#if defined(APP_WXSEND)
+void stop_wxsend(void){
+	eval("/usr/bin/wxsend.sh","stop");
+}
+
+void start_wxsend(void){
+	int wxsend_enable = nvram_get_int("wxsend_enable");
+	if ( wxsend_enable == 1)
+		eval("/usr/bin/wxsend.sh","start");
+}
+
+void restart_wxsend(void){
+	stop_wxsend();
+	start_wxsend();
+}
+#endif
+
+#if defined(APP_UUPLUGIN)
+void stop_uuplugin(void){
+	eval("/usr/bin/uuplugin.sh","stop");
+}
+
+void start_uuplugin(void){
+	int uuplugin_enable = nvram_get_int("uuplugin_enable");
+	if ( uuplugin_enable == 1)
+		eval("/usr/bin/uuplugin.sh","start");
+}
+
+void restart_uuplugin(void){
+	stop_uuplugin();
+	start_uuplugin();
+}
+#endif
+
+#if defined(APP_V2RAYA)
+void stop_v2raya(void){
+	eval("/usr/bin/v2raya.sh","stop");
+}
+
+void start_v2raya(void){
+	int v2raya_enable = nvram_get_int("v2raya_enable");
+	if ( v2raya_enable == 1)
+		eval("/usr/bin/v2raya.sh","start");
+}
+
+void restart_v2raya(void){
+	stop_v2raya();
+	start_v2raya();
+}
+#endif
+
+
 void
 start_httpd(int restart_fw)
 {
@@ -910,6 +996,15 @@ stop_services(int stopall)
 #endif
 #if defined(APP_FRP)
 	stop_frp();
+#endif
+#if defined(APP_LUCKY)
+	stop_lucky();
+#endif
+#if defined(APP_CLOUDFLARED)
+	stop_cloudflared();
+#endif
+#if defined(APP_WXSEND)
+	stop_wxsend();
 #endif
 	stop_networkmap();
 	stop_lltd();
