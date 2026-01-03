@@ -38,7 +38,7 @@
 <% login_state_hook(); %>
 			function initial() {
 				show_banner(2);
-				show_menu(5, 22, 0);
+				show_menu(5, 24, 0);
 				show_footer();
 				fill_status(uuplugin_status());
 
