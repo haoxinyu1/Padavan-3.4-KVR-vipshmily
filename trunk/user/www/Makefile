@@ -198,5 +198,20 @@ ifneq ($(CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CLIENT),y)
 	rm -f $(INSTALLDIR)/www/vpn_clients.asp
 	rm -f $(INSTALLDIR)/www/vpncli.asp
 endif
+ifneq ($(CONFIG_FIRMWARE_INCLUDE_LUCKY),y)
+	rm -f $(INSTALLDIR)/www/Advanced_lucky.asp
+endif
+ifneq ($(CONFIG_FIRMWARE_INCLUDE_CLOUDFLARED),y)
+	rm -f $(INSTALLDIR)/www/Advanced_cloudflared.asp
+endif
+ifneq ($(CONFIG_FIRMWARE_INCLUDE_WXSEND),y)
+	rm -f $(INSTALLDIR)/www/Advanced_wxsend.asp
+endif
+ifneq ($(CONFIG_FIRMWARE_INCLUDE_UUPLUGIN),y)
+	rm -f $(INSTALLDIR)/www/Advanced_uuplugin.asp
+endif
+ifneq ($(CONFIG_FIRMWARE_INCLUDE_V2RAYA),y)
+	rm -f $(INSTALLDIR)/www/Advanced_v2raya.asp
+endif
 clean:
 	@echo "Clean www romfs"
