@@ -570,10 +570,6 @@ end
 			end
 		end
 
-			ssrindex = ssrindex + 1
-			end
-		end
-
 		log('准备写入新增节点，起始索引: ' .. ssrindex)
 		local node_count = 0
 		local valid_nodes = 0
