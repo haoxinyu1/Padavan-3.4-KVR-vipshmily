@@ -30,6 +30,42 @@ check_net()
 
 frp_start () 
 {
+    frp_bin_dir="/tmp/frp_bin"
+    mkdir -p "$frp_bin_dir"
+    export PATH="$frp_bin_dir:$PATH"
+
+    if [ ! -x "$frp_bin_dir/frpc" ] || [ ! -x "$frp_bin_dir/frps" ]; then
+        logger -t "frp" "FRP 二进制文件缺失，开始下载..."
+        frp_url=`nvram get frp_url`
+        save_path="/tmp/frp.tar.gz"
+        
+        dl_success=0
+        if [ -n "$frp_url" ]; then
+            logger -t "frp" "使用自定义地址下载: $frp_url"
+            curl -k -s -o "$save_path" --connect-timeout 10 --retry 3 "$frp_url" && dl_success=1
+        fi
+
+        if [ "$dl_success" = "0" ]; then
+            def_url="https://github.com/fatedier/frp/releases/download/v0.57.0/frp_0.57.0_linux_mipsle.tar.gz"
+            logger -t "frp" "使用默认地址下载: $def_url"
+            curl -k -s -o "$save_path" --connect-timeout 10 --retry 3 "$def_url" && dl_success=1
+        fi
+
+        if [ "$dl_success" = "1" ]; then
+            logger -t "frp" "下载成功，正在解压..."
+            tar -xzf "$save_path" -C "/tmp"
+            # 移动解压后的文件到 bin 目录 (假设解压出的是 frp_0.57.0_linux_mipsle 目录)
+            find /tmp -name "frpc" -type f -exec mv {} "$frp_bin_dir/" \;
+            find /tmp -name "frps" -type f -exec mv {} "$frp_bin_dir/" \;
+            chmod +x "$frp_bin_dir/frpc"
+            chmod +x "$frp_bin_dir/frps"
+            rm -f "$save_path"
+            rm -rf /tmp/frp_*_linux_mipsle
+        else
+            logger -t "frp" "下载失败，请检查网络或自定义URL。"
+        fi
+    fi
+
 	/etc/storage/frp_script.sh
 	sed -i '/frp/d' /etc/storage/cron/crontabs/$http_username
 	cat >> /etc/storage/cron/crontabs/$http_username << EOF
