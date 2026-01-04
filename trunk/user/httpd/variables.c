@@ -1292,7 +1292,7 @@
 
 #if defined(APP_UUPLUGIN)
 	struct variable variables_UUPLUGIN[] = {
-			{"uuplugin_enable", "", NULL, EVM_RESTART_UUPLUGIN},
+			{"uu_enable", "", NULL, EVM_RESTART_UUPLUGIN},
 			{"w_uuplugin", "", NULL, FALSE},
 			{0,0,0,0}
 	};
