@@ -71,17 +71,10 @@ uu_start () {
   fi
 if [ ! -s "$PROG" ] || [ ! -s "$UU_CONF" ] ; then
    logg "$PROG 程序未找到，开始下载"
-    uuplugin_url_custom=`nvram get uu_url`
-    if [ -n "$uuplugin_url_custom" ]; then
-        plugin_url="$uuplugin_url_custom"
-        plugin_md5=""
-        logg "使用自定义地址: $plugin_url"
-    else
-        UU_url=$(curl -L -s -k -H "Accept:text/plain" "$uurl" | wget --header=Accept:text/plain -q --no-check-certificate -O - "$uurl" | curl -s -k -H "Accept:text/plain" "$uurl")
-        [ -z "$UU_url" ] && UU_url="https://uu.gdl.netease.com/uuplugin/merlin-mipsel/v6.3.10/uu.tar.gz,2482ce645a208451b99301b717085afd"
-        plugin_url=$(echo "$UU_url" | cut  -d ',' -f 1)
-        plugin_md5=$(echo "$UU_url" | cut  -d ',' -f 2)
-    fi
+    UU_url=$(curl -L -s -k -H "Accept:text/plain" "$uurl" | wget --header=Accept:text/plain -q --no-check-certificate -O - "$uurl" | curl -s -k -H "Accept:text/plain" "$uurl")
+    [ -z "$UU_url" ] && UU_url="https://uu.gdl.netease.com/uuplugin/merlin-mipsel/v6.3.10/uu.tar.gz,2482ce645a208451b99301b717085afd"
+    plugin_url=$(echo "$UU_url" | cut  -d ',' -f 1)
+    plugin_md5=$(echo "$UU_url" | cut  -d ',' -f 2)
     logg "下载$plugin_url 到/tmp/uu.tar.gz"
     length=$(wget --no-check-certificate -T 5 -t 3 "$plugin_url" -O /dev/null --spider --server-response 2>&1 | grep "[Cc]ontent-[Ll]ength" | grep -Eo '[0-9]+' | tail -n 1)
     length=`expr $length + 512000`
@@ -89,7 +82,7 @@ if [ ! -s "$PROG" ] || [ ! -s "$UU_CONF" ] ; then
     [ ! -z "$length" ] && logg "uu.tar.gz压缩包大小 ${length}M"
     curl -L -s -k "$plugin_url" -o /tmp/uu.tar.gz >/dev/null 2>&1 || wget -q --no-check-certificate "$plugin_url" -O /tmp/uu.tar.gz >/dev/null 2>&1 || curl -s -k "$plugin_url" -o /tmp/uu.tar.gz >/dev/null 2>&1 
     download_md5=$(md5sum /tmp/uu.tar.gz | awk '{print $1}')
-    if [ -n "$plugin_md5" ] && [ "$download_md5" != "$plugin_md5" ];then
+    if [ "$download_md5" != "$plugin_md5" ];then
             logg "下载的/tmp/uu.tar.gz不完整！脚本退出运行"
             rm -rf /tmp/uu.tar.gz
           else

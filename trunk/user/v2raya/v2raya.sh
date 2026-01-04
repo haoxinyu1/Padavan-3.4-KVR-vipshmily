@@ -135,28 +135,6 @@ get_tag() {
 
 dowload_v2() {
 	tag="$1"
-    v2raya_url_custom=`nvram get v2raya_url`
-    if [ -n "$v2raya_url_custom" ]; then
-        logger -t "【V2RayA】" "使用自定义地址下载: $v2raya_url_custom"
-        curl -Lko "$v2raya" "$v2raya_url_custom" || wget --no-check-certificate -O "$v2raya" "$v2raya_url_custom"
-        if [ "$?" = 0 ] ; then
-            chmod +x $v2raya
-            if [[ "$($v2raya -h 2>&1 | wc -l)" -gt 3 ]]  ; then
-                logger -t "【V2RayA】" "自定义下载成功"
-                v2_ver=$($v2raya --version)
-                if [ -z "$v2_ver" ] ; then
-                    nvram set v2raya_ver=""
-                else
-                    nvram set v2raya_ver="v${v2_ver}"
-                fi
-                return 0
-            else
-                logger -t "【V2RayA】" "自定义下载文件校验失败"
-            fi
-        else
-             logger -t "【V2RayA】" "自定义下载失败"
-        fi
-    fi
 	bin_path=$(dirname "$v2raya")
 	[ ! -d "$bin_path" ] && mkdir -p "$bin_path"
 	url="https://github.com/v2rayA/v2rayA/releases/download/v${tag}/v2raya_linux_mips32le_${tag}"
