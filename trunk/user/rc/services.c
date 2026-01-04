@@ -668,8 +668,8 @@ void stop_uuplugin(void){
 }
 
 void start_uuplugin(void){
-	int uuplugin_enable = nvram_get_int("uuplugin_enable");
-	if ( uuplugin_enable == 1)
+	int uu_enable = nvram_get_int("uu_enable");
+	if ( uu_enable == 1)
 		eval("/usr/bin/uuplugin.sh","start");
 }
 
